@@ -9,44 +9,39 @@
 
 package org.surna.gcep.filters;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * @author rpbrandt
  * 
- * Two geometries base and test are said to intersect if some part of test is contained in base
- * This filter returns true if test intersects base
+ *         Two geometries base and test are said to intersect if some part of
+ *         test is contained in base This filter returns true if test intersects
+ *         base
  */
 
-public class STIntersectsFilter
-{
-	//	org.apache.commons.logging.log used for logging
-    private static final Log log = LogFactory.getLog(STIntersectsFilter.class);
-    
-    //	setting up for Singleton pattern
-	private static final STIntersectsFilter INSTANCE = new STIntersectsFilter();
-	
-	private STIntersectsFilter()
-	{
-		
-	}
-	public static STIntersectsFilter getInstance()
-	{
-		return INSTANCE;
-	}
-	
-	public boolean STIntersects( Geometry base, Geometry test)
-	{
-		if(log.isInfoEnabled())
-		{
-			String logStmt = "STIntersects is test = " + test.toString() + " some part of test is within base = " + base.toText();
-			log.info(logStmt);			
-		}
-		boolean retVal = base.intersects(test);
-		
-		return retVal;
-		
-	}
+public class STIntersectsFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(STIntersectsFilter.class);
+
+    // setting up for Singleton pattern
+    private static final STIntersectsFilter INSTANCE = new STIntersectsFilter();
+
+    private STIntersectsFilter() {
+
+    }
+
+    public static STIntersectsFilter getInstance() {
+        return INSTANCE;
+    }
+
+    public boolean STIntersects(Geometry base, Geometry test) {
+        boolean retVal = base.intersects(test);
+        LOGGER.debug("STIntersects is test = {}, some part of test is within base = {}, retVal = {}", test, base,
+                retVal);
+
+        return retVal;
+
+    }
 }

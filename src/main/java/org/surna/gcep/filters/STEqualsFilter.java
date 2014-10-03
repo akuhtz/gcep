@@ -9,44 +9,38 @@
 
 package org.surna.gcep.filters;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * @author rpbrandt
  * 
- * Two geometries base and test are said to be equal if test is spatially equal to base
- * This filter returns true if test is spacially equal to base
+ *         Two geometries base and test are said to be equal if test is
+ *         spatially equal to base This filter returns true if test is spacially
+ *         equal to base
  */
 
-public class STEqualsFilter
-{
-	//	org.apache.commons.logging.log used for logging
-    private static final Log log = LogFactory.getLog(STEqualsFilter.class);
-    
-    //	setting up for Singleton pattern
-	private static final STEqualsFilter INSTANCE = new STEqualsFilter();
-	
-	private STEqualsFilter()
-	{
-		
-	}
-	public static STEqualsFilter getInstance()
-	{
-		return INSTANCE;
-	}
-	
-	public boolean STEquals( Geometry base, Geometry test)
-	{
-		if(log.isInfoEnabled())
-		{
-			String logStmt = "STEquals is test = " + test.toString() + " test is spacially equal to base = " + base.toText();
-			log.info(logStmt);			
-		}
-		boolean retVal = base.equals(test);
-		
-		return retVal;
-		
-	}
+public class STEqualsFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(STEqualsFilter.class);
+
+    // setting up for Singleton pattern
+    private static final STEqualsFilter INSTANCE = new STEqualsFilter();
+
+    private STEqualsFilter() {
+
+    }
+
+    public static STEqualsFilter getInstance() {
+        return INSTANCE;
+    }
+
+    public boolean STEquals(Geometry base, Geometry test) {
+        boolean retVal = base.equals(test);
+        LOGGER.debug("STEquals is test = {}, test is spacially equal to base = {}, retVal = {}", test, base, retVal);
+
+        return retVal;
+
+    }
 }

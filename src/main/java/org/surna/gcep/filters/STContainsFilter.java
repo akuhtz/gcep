@@ -9,37 +9,31 @@
 
 package org.surna.gcep.filters;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vividsolutions.jts.geom.Geometry;
 
-public class STContainsFilter
-{
-	//	org.apache.commons.logging.log used for logging
-    private static final Log log = LogFactory.getLog(STContainsFilter.class);
-    
-    //	setting up for Singleton pattern
-	private static final STContainsFilter INSTANCE = new STContainsFilter();
-	
-	private STContainsFilter()
-	{
-		
-	}
-	public static STContainsFilter getInstance()
-	{
-		return INSTANCE;
-	}
-	
-	public boolean STContains( Geometry base, Geometry test)
-	{
-		if(log.isInfoEnabled())
-		{
-			String logStmt = "STContains is test = " + test.toString() + " contained within base = " + base.toText();
-			log.info(logStmt);			
-		}
-		boolean retVal = base.contains(test);
-		
-		return retVal;
-		
-	}
+public class STContainsFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(STContainsFilter.class);
+
+    // setting up for Singleton pattern
+    private static final STContainsFilter INSTANCE = new STContainsFilter();
+
+    private STContainsFilter() {
+
+    }
+
+    public static STContainsFilter getInstance() {
+        return INSTANCE;
+    }
+
+    public boolean STContains(Geometry base, Geometry test) {
+        LOGGER.debug("STContains is test = {} contained within base = {}", test, base);
+
+        boolean retVal = base.contains(test);
+
+        return retVal;
+
+    }
 }

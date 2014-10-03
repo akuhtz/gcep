@@ -9,47 +9,42 @@
 
 package org.surna.gcep.filters;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * @author rpbrandt
  * 
- * Two geometries base and test are said to cross if some part of test spatially crosses base
- * The Crosses relation applies to P/L, P/A, L/L and L/A situations. 
- * point crossing point is undefined.  If both test and base are a point, this filter will return false
- * polygon crossing polygon is undefined.  If both test and base are polygons, this filter will return false.
- * This filter returns true if test crosses base
+ *         Two geometries base and test are said to cross if some part of test
+ *         spatially crosses base The Crosses relation applies to P/L, P/A, L/L
+ *         and L/A situations. point crossing point is undefined. If both test
+ *         and base are a point, this filter will return false polygon crossing
+ *         polygon is undefined. If both test and base are polygons, this filter
+ *         will return false. This filter returns true if test crosses base
  */
 
-public class STCrossesFilter
-{
-	//	org.apache.commons.logging.log used for logging
-    private static final Log log = LogFactory.getLog(STCrossesFilter.class);
-    
-    //	setting up for Singleton pattern
-	private static final STCrossesFilter INSTANCE = new STCrossesFilter();
-	
-	private STCrossesFilter()
-	{
-		
-	}
-	public static STCrossesFilter getInstance()
-	{
-		return INSTANCE;
-	}
-	
-	public boolean STCrosses( Geometry base, Geometry test)
-	{
-		if(log.isInfoEnabled())
-		{
-			String logStmt = "STCrosses is test = " + test.toString() + " some part of test spatially crosses base = " + base.toText();
-			log.info(logStmt);			
-		}
-		boolean retVal = base.crosses(test);
-		
-		return retVal;
-		
-	}
+public class STCrossesFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(STCrossesFilter.class);
+
+    // setting up for Singleton pattern
+    private static final STCrossesFilter INSTANCE = new STCrossesFilter();
+
+    private STCrossesFilter() {
+
+    }
+
+    public static STCrossesFilter getInstance() {
+        return INSTANCE;
+    }
+
+    public boolean STCrosses(Geometry base, Geometry test) {
+        boolean retVal = base.crosses(test);
+        LOGGER.debug("STCrosses is test = {}, some part of test spatially crosses base = {}, retVal = {}", test, base,
+                retVal);
+
+        return retVal;
+
+    }
 }

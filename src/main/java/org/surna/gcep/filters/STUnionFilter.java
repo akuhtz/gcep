@@ -9,45 +9,39 @@
 
 package org.surna.gcep.filters;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * @author rpbrandt
- *
- * The union of two Geometries A and B is the set of all points which lie in A or B.
- * This filter returns the union of two geometries or an empty geometry if there is no intersection
+ * 
+ *         The union of two Geometries A and B is the set of all points which
+ *         lie in A or B. This filter returns the union of two geometries or an
+ *         empty geometry if there is no intersection
  */
 
-public class STUnionFilter
-{
-	//	org.apache.commons.logging.log used for logging
-    private static final Log log = LogFactory.getLog(STUnionFilter.class);
-    
-    //	setting up for Singleton pattern
-	private static final STUnionFilter INSTANCE = new STUnionFilter();
-	
-	private STUnionFilter()
-	{
-		
-	}
-	public static STUnionFilter getInstance()
-	{
-		return INSTANCE;
-	}
-	
-	public Geometry STUnion( Geometry base, Geometry test)
-	{
-		
-		Geometry retVal = base.union(test);
-		if(log.isInfoEnabled())
-		{
-			String logStmt = "STUnion is test = " + test.toString() + " Union = " + retVal.toString() + " is union of test and base = " + base.toText();
-			log.info(logStmt);			
-		}
-		
-		return retVal;
-		
-	}
+public class STUnionFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(STUnionFilter.class);
+
+    // setting up for Singleton pattern
+    private static final STUnionFilter INSTANCE = new STUnionFilter();
+
+    private STUnionFilter() {
+
+    }
+
+    public static STUnionFilter getInstance() {
+        return INSTANCE;
+    }
+
+    public Geometry STUnion(Geometry base, Geometry test) {
+
+        Geometry retVal = base.union(test);
+        LOGGER.debug("STUnion is test = {}, Union = {} is union of test and base = {}", test, retVal, base);
+
+        return retVal;
+
+    }
 }
